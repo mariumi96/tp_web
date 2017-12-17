@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мой блог</title>
+    <!-- Bootstrap core CSS -->
+
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static "css/common.css" %}" rel="stylesheet">
+</head>
+<body class="bg-color">
+    <nav class="navbar navbar-expand-md navbar-dark navbar-color fixed-top">
+      <a class="navbar-brand" href="{% url "index" %}"><img class="logo" src="/static/img/logo.png"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" size="62" placeholder="Search" aria-label="Search">
+          <input type="button" value="Ask!" class="btn btn-outline-success search-btn-color my-2 my-sm-0" onclick='location.href="{% url "ask" %}"'>
+        </form>
+      </div>
+        {% block user %}
+        <img class="avatar" src="/static/img/user.png">
+        <div class="usr">Marie<br><a class="user-act" href="{% url "settings" %}">settings</a><a class="user-act" href={% url "logged_out" %}>logout</a></div>
+{% endblock %}
+
+    </nav>
+<!-- /.container -->
+    {% block content %}
+    {%  endblock %}
+<footer class="footer">
+    <hr>
+    <div class="row">
+    <div class="col-md-9">
+    &copy; Постникова Мария АПО-13
+        </div>
+    <div class="col-md-3 social">
+        <a href="http://vk.com"><img src="/static/img/vk.png"></a>
+        <a href=#><img src="/static/img/instagram.png"></a>
+        <a href="#"><img src="/static/img/twitter.png"></a>
+        <a href="#"><img src="/static/img/google-plus.png"></a>
+        <a href="#"><img src="/static/img/facebook.png"></a>
+        </div>
+        </div>
+</footer>
+<script type="text/javascript" src="/static/js/jquery-3.2.1.slim.min.js"></script>
+<script type="text/javascript" src="/static/js/popper.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+</body>
+</html>

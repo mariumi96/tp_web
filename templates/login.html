@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block user %}
+<div class="logged_out"><a class="user-act" href="{% url "login" %}">login</a><a class="user-act" href="{% url 'singup' %}">register</a></div>
+{% endblock %}
+    {% block content %}
+<div class="container">
+
+    <div class="row">
+
+      <div class="col-md-9 col-sm-6 ">
+           <div class="h_new row"><h3>Log in</h3></div>
+
+
+           <form class="login">
+     <div class="form-group row">
+       <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+       <div class="col-sm-10">
+         <input type="email" class="form-control is-invalid" id="inputEmail3" placeholder="Email">
+         <div class="invalid-feedback">
+        Please provide a valid email address.
+      </div>
+       </div>
+     </div>
+     <div class="form-group row">
+       <label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+       <div class="col-sm-10">
+         <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+       </div>
+     </div>
+     <div class="form-group row">
+       <div class="col-sm-10">
+         <button type="submit" class="btn btn-primary btn-login">Log in!</button>
+       </div>
+     </div>
+   </form>
+       </div>
+
+
+
+
+
+        <div class="col-md-3 col-sm-6 right-col">
+            <div class="h_tags row"><h3>Popular tags</h3></div>
+
+            <div class="headers">
+            <b class="red-label header">MySQL</b><b class="blue-label header">Ruby</b><b class="green-label header">C++</b><b class="purple-label header">Tarantool</b>
+                <b class="blue-label header">PHP</b><b class="green-label header">python</b><b class="purple-label header">perl</b><b class="orange-label header">Mail.ru</b>
+                <b class="green-label header">django</b><b class="orange-label header">FireFox</b><b class="blue-label header">Apache</b>
+                <b class="red-label header">nginx</b><b class="purple-label header">gunicorn</b>
+            </div>
+            <div class="h_tags row"><h3>Best members</h3></div>
+            <div class="members">
+            <a href="#">Dr.Pepper</a>
+            <br>
+            <a href="#">Dr.House</a>
+                <br>
+                <a href="#">V.Pupkin</a>
+            <br>
+            <a href="#">Bender</a>
+                <br>
+                <a href="#">Mr.Freeman</a>
+            <br>
+            <a href="#">Queen Victoria</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+        <img class="cat" src="../static/img/cat.png">
+{% endblock %}

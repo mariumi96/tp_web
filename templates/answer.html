@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+    {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Мой блог</title>
+  <!-- Bootstrap core CSS -->
+  <link href="../static/css/bootstrap.css" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="../static/css/common.css" rel="stylesheet">
+</head>
+<body class="bg-color">
+    <nav class="navbar navbar-expand-md navbar-dark navbar-color fixed-top">
+      <a class="navbar-brand" href="index.html"><img class="logo" src="../static/img/logo.png"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control form-search mr-sm-2" type="text" size="62" placeholder="Search" aria-label="Search">
+          <input type="button" value="Ask!" class="btn btn-outline-success search-btn-color my-2 my-sm-0" onclick='location.href="ask.html"'>
+        </form>
+      </div>
+
+        <img class="avatar" src="../static/img/girl.png">
+        <div class="usr">Marie<br><a class="user-act" href="#">settings</a><a class="user-act" href="logged_out.html">logout</a></div>
+
+    </nav>
+<div class="container">
+
+    <div class="row">
+
+      <div class="col-md-9 col-sm-6 ">
+
+
+       <div class="question row">
+
+         <div class="col-md-2">
+
+            <img class="q-big-avatar" src="../static/img/mickey.jpg">
+               <span class="q-name">Mickey</span><br>
+             <a href="#" class="like"></a><a href="#" class="likes">5</a>
+<a href="#" class="dislike"></a><a href="#" class="likes">5</a>
+
+         </div>
+
+         <div class="col-md-10">
+
+           <div class="q-title">Почему герои мультфильмов Диснея носят белые перчатки?</div>
+           <div class="q-text">Вы задумывались, почему персонажи в мультфильмах Диснея носят белые перчатки?
+               Мы в AdMe.ru решили прояснить эту загадку и сделали несколько удивительных открытий.
+               Впервые на себя примерил перчатки Микки Маус, но знаменитый аксессуар появился у него не сразу. В мультфильме «Безумный самолет» (май 1928 года) у Микки черные лапки. Спустя полгода в «Пароходике Вилли» мышонок предстает уже в обуви. Фирменные перчатки появляются у героя в 1929 году в «Деревенской опере».
+               Так зачем же Диснею понадобилось надевать перчатки сначала на Микки Мауса, а потом и на других персонажей своих мультфильмов? На это есть три причины.
+               Прорисовывать в каждом кадре героям лапы — долго и трудозатратно. В 20-х годах XX века художники нашли способ ускорить процесс. Персонажей стали рисовать без излишней детализации: с большими головами и глазами, тонкими и длинными ногами и руками, с четырьмя пальцами.
+               Существовала еще одна проблема: нечеткая черно-белая пленка не позволяла разглядеть черные руки персонажа на фоне черного тела. Благодаря белым перчаткам художники смогли сделать акцент на лапах героев и их жестах.
+
+               Как признавался Уолт Дисней в биографии: «Мы не хотели, чтобы у Микки Мауса были мышиные лапки, он должен был быть больше похож на человека. Поэтому мы надели на него перчатки».
+               Прием оказался настолько удачным, что его начали использовать даже конкуренты Диснея.
+
+
+               Источник: <a href="https://www.adme.ru/zhizn-semya/pochemu-geroi-multfilmov-disneya-nosyat-belye-perchatki-1459715/"> © AdMe.ru</a>
+
+               <br>
+               <div class="tags">
+               <a href="#">answer(3)</a>
+               Tags: <a href="#">bender</a> <a href="#">disney</a>
+                   </div>
+
+           </div>
+
+
+
+
+         </div>
+
+       </div>
+       <div class="question row">
+
+      <div class="col-md-2">
+
+      <img class="q-avatar" src="../static/img/answ1.png">
+         <span class="name">Jane</span><br>
+      <a href="#" class="like"></a><a href="#" class="likes">5</a>
+      <a href="#" class="dislike"></a><a href="#" class="likes">3</a>
+
+      </div>
+
+      <div class="col-md-10">
+
+      <div class="q-text">Персонажей стали рисовать без излишней детализации:
+         с большими головами и глазами, тонкими и длинными ногами и руками, с четырьмя пальцами.
+      <br>
+
+      </div>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" value="">
+          Correct answer!
+        </label>
+      </div>
+      </div>
+
+      </div>
+
+      <div class="question row">
+
+     <div class="col-md-2">
+
+     <img class="q-avatar" src="../static/img/answ2.png">
+     <span class="name">Judy</span><br>
+     <a href="#" class="like"></a><a href="#" class="likes">5</a>
+     <a href="#" class="dislike"></a><a href="#" class="likes">3</a>
+
+     </div>
+
+     <div class="col-md-10">
+
+     <div class="q-text"> Существовала еще одна проблема: нечеткая
+       черно-белая пленка не позволяла разглядеть черные руки персонажа на фоне черного тела.
+     <br>
+     </div>
+     <div class="form-check">
+       <label class="form-check-label">
+         <input class="form-check-input" type="checkbox" value="">
+         Correct answer!
+       </label>
+     </div>
+     </div>
+
+     </div>
+     <div class="question row">
+
+    <div class="col-md-2">
+
+    <img class="q-avatar" src="../static/img/answ3.png">
+       <span class="name">John</span><br>
+    <a href="#" class="like"></a><a href="#" class="likes">5</a>
+    <a href="#" class="dislike"></a><a href="#" class="likes">3</a>
+
+    </div>
+
+    <div class="col-md-10">
+
+    <div class="q-text">Примечательный аксессуар мы можем до сих пор наблюдать у дятла
+      Вуди и кролика Банни — персонажей Universal Pictures и Warner Brothers
+    <br>
+    </div>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" value="">
+        Correct answer!
+      </label>
+    </div>
+    </div>
+
+    </div>
+
+<hr>
+<form class="new-question">
+  <div class="form-group row">
+      <textarea class="form-control your-answ" rows="10" placeholder="Enter your answer here"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary btn-answ">Answer</button>
+</form>
+      </div>
+
+        <div class="col-md-3 col-sm-6 right-col">
+            <div class="h_tags row"><h3>Popular tags</h3></div>
+
+            <div class="headers">
+            <b class="red-label header">MySQL</b><b class="blue-label header">Ruby</b><b class="green-label header">C++</b><b class="purple-label header">Tarantool</b>
+                <b class="blue-label header">PHP</b><b class="green-label header">python</b><b class="purple-label header">perl</b><b class="orange-label header">Mail.ru</b>
+                <b class="green-label header">django</b><b class="orange-label header">FireFox</b><b class="blue-label header">Apache</b>
+                <b class="red-label header">nginx</b><b class="purple-label header">gunicorn</b>
+            </div>
+            <div class="h_tags row"><h3>Best members</h3></div>
+            <div class="members">
+            <a href="#">Dr.Pepper</a>
+            <br>
+            <a href="#">Dr.House</a>
+                <br>
+                <a href="#">V.Pupkin</a>
+            <br>
+            <a href="#">Bender</a>
+                <br>
+                <a href="#">Mr.Freeman</a>
+            <br>
+            <a href="#">Queen Victoria</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+</div>
+{% endblock %}

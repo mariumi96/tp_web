@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+    {% block content %}
+<div class="container">
+
+    <div class="row">
+
+      <div class="col-md-9 col-sm-6 ">
+         <div class="h_questions row"><h3>Tag: disney</h3></div>
+
+       <div class="question row">
+
+         <div class="col-md-2">
+
+            <a href={%  url "answer" %}><img class="q-avatar" src="../static/img/mickey.jpg"></a>
+             <a href="#" class="like"></a><a href="#" class="likes">5</a>
+<a href="#" class="dislike"></a><a href="#" class="likes">5</a>
+
+         </div>
+
+         <div class="col-md-10">
+
+           <div class="q-title">  <a href={%  url "answer" %}>Почему герои мультфильмов Диснея носят белые перчатки?</a></div>
+           <div class="q-text">Вы задумывались, почему персонажи в мультфильмах Диснея носят белые перчатки?
+               Мы в AdMe.ru решили прояснить эту загадку и сделали несколько удивительных открытий.
+               <a class="learn-more" href={%  url "answer" %}>Читать далее...</a>
+               <br>
+               <div class="tags">
+               <a href="#">answer(3)</a>
+               Tags: <a href="#">bender</a> <a href="#">disney</a>
+                   </div>
+           </div>
+
+
+
+
+         </div>
+
+       </div>
+                 <div class="question row">
+
+         <div class="col-md-2">
+
+            <img class="q-avatar" src="../static/img/mickey.jpg">
+<a href="#" class="like"></a><a href="#" class="likes">5</a>
+<a href="#" class="dislike"></a><a href="#" class="likes">3</a>
+         </div>
+
+         <div class="col-md-10">
+
+           <div class="q-title">Почему герои мультфильмов Диснея носят белые перчатки?</div>
+           <div class="q-text">Вы задумывались, почему персонажи в мультфильмах Диснея носят белые перчатки?
+               Мы в AdMe.ru решили прояснить эту загадку и сделали несколько удивительных открытий.
+               <a class="learn-more" href="#">Читать далее...</a>
+               <br>
+               <div class="tags">
+               <a href="#">answer(6)</a>
+               Tags: <a href="#">bender</a> <a href="#">disney</a>
+                   </div>
+           </div>
+
+
+
+
+         </div>
+
+       </div>
+       <div class="question row">
+
+         <div class="col-md-2">
+
+            <img class="q-avatar" src="../static/img/mickey.jpg">
+<a href="#" class="like"></a><a href="#" class="likes">4</a>
+<a href="#" class="dislike"></a><a href="#" class="likes">5</a>
+         </div>
+
+         <div class="col-md-10">
+
+           <div class="q-title">Почему герои мультфильмов Диснея носят белые перчатки?</div>
+           <div class="q-text">Вы задумывались, почему персонажи в мультфильмах Диснея носят белые перчатки?
+               Мы в AdMe.ru решили прояснить эту загадку и сделали несколько удивительных открытий.
+               <a class="learn-more" href="#">Читать далее...</a>
+               <br>
+               <div class="tags">
+               <a href="#">answer(2)</a>
+               Tags: <a href="#">bender</a> <a href="#">disney</a>
+                   </div>
+           </div>
+
+
+
+
+         </div>
+
+       </div>
+
+
+
+      </div>
+
+        <div class="col-md-3 col-sm-6 right-col">
+            <div class="h_tags row"><h3>Popular tags</h3></div>
+
+            <div class="headers">
+            <b class="red-label header">MySQL</b><b class="blue-label header">Ruby</b><b class="green-label header">C++</b><b class="purple-label header">Tarantool</b>
+                <b class="blue-label header">PHP</b><b class="green-label header">python</b><b class="purple-label header">perl</b><b class="orange-label header">Mail.ru</b>
+                <b class="green-label header">django</b><b class="orange-label header">FireFox</b><b class="blue-label header">Apache</b>
+                <b class="red-label header">nginx</b><b class="purple-label header">gunicorn</b>
+            </div>
+            <div class="h_tags row"><h3>Best members</h3></div>
+            <div class="members">
+            <a href="#">Dr.Pepper</a>
+            <br>
+            <a href="#">Dr.House</a>
+                <br>
+                <a href="#">V.Pupkin</a>
+            <br>
+            <a href="#">Bender</a>
+                <br>
+                <a href="#">Mr.Freeman</a>
+            <br>
+            <a href="#">Queen Victoria</a>
+            </div>
+
+
+        </div>
+
+    </div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+</div>
+{% endblock %}

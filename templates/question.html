@@ -1,0 +1,35 @@
+
+       <div class="question row">
+
+         <div class="col-md-2">
+
+            <a href=#><img class="q-avatar" src="/static/img/question.jpg"></a>
+             <a href="#" class="like"></a><a href="#" class="likes">{{ rating }}</a>
+             <a href="#" class="dislike"></a><a href="#" class="likes">0</a>
+
+         </div>
+
+         <div class="col-md-10">
+
+           <div class="q-title">  <a href="{% url "question_url" id %}">{{ title }}</a></div>
+           <div class="q-text">{{ snippet }}
+               <a class="learn-more" href="{% url "question_url" id %}">Читать далее...</a>
+               <br>
+               <div class="tags">
+
+               <a href="#">answer({{ q.get_answers_count }})</a>
+               Tags:
+                   {% for tag in q.tags.all %}
+                       <a href="{% url "tag_url" tag.name %}">{{ tag.name }}</a>
+                   {% endfor %}
+
+               </div>
+           </div>
+
+
+
+
+         </div>
+
+
+</div>
