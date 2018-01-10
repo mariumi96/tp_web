@@ -18,7 +18,7 @@ Including another URLconf
 from . import views
 from django.conf.urls import url
 from django.contrib import admin
-from views import QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,ask_view,settings_view,singup_view,login_view,logged_out_view,tags_disney_view
+from views import register,QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,ask_view,settings_view,singup_view,login_view,logged_out_view
 urlpatterns = [
     url(r'^$', QuestionsView.as_view(), name = "index"),
     url(r'^question/(?P<id>\d+)',QuestionView.as_view(),name="question_url"),
@@ -30,7 +30,5 @@ urlpatterns = [
     url(r'^logged_out/', logged_out_view, name = 'logged_out'),
     url(r'^best/',BestQuestionsView.as_view(),name="best_question_url"),
     url(r'^new/',NewQuestionsView.as_view(),name="new_question_url"),
-    # Осталось список вопросов по тэгу
-    #url(r'^tag/disney/', tags_disney_view, name='tag_disney'),
     url(r'^admin/', admin.site.urls),
 ]

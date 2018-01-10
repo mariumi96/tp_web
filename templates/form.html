@@ -1,0 +1,21 @@
+{% for e in form.non_field_errors %}
+<div class="alert alert-danger">{{ e }}</div>
+{% endfor %}
+<form class="new-question" method="POST">
+{% for field in form %}
+             <div class="form-group row ">
+             {% csrf_token %}
+               <label for="inputTitle" class="col-sm-1 col-form-label">{{ field.label }}</label>
+                 <div class="col-sm-11 control-group">
+                     <div class="">{{ field }}</div>
+                     {% for e in field.errors %}
+                     <div class="text-danger">{{ e }}</div>
+                         {% endfor %}
+                     <small id="passwordHelpInline" class="text-muted"> {{ field.help_text }}</small>
+               </div>
+             </div>
+{% endfor %}
+
+             <button type="submit" class="btn btn-primary btn-new-question">Ask!</button>
+           </form>
+
