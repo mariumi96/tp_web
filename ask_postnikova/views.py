@@ -65,9 +65,9 @@ class AskView(View):
         except Profile.DoesNotExist:
             profile = Profile(user=request.user)
 
-        form = QuestionForm(data=request.POST,instance=profile)
+        form = QuestionForm(data=request.POST,user=profile)
         if form.is_valid():
-            new_question = form.save()
+            form.save()
             q = Question.objects.latest('id')
             q.author = profile
             q.save()

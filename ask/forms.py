@@ -21,6 +21,12 @@ class QuestionForm(forms.ModelForm):
             'title':"Help text for title"
         }
 
+    def save(self, commit=True):
+        question = super(QuestionForm, self).save(commit=False)
+        question.author = self.user
+        question.save()
+        return question
+
     def clean_text(self):
         text=self.cleaned_data['text']
         if(len(text)<10):
