@@ -16,7 +16,7 @@ GOOD_RATING = 2
 class Profile(models.Model):
 
     # Откуда будут загружены аватары
-    avatar = models.ImageField(upload_to="avatars/",default="avatars/user.png")
+    avatar = models.ImageField(upload_to="uploads/avatars/",default="uploads/avatars/avatar.png")
 
     # Связь 1-к-1
     user = models.OneToOneField(User)
@@ -27,7 +27,7 @@ class Profile(models.Model):
             return self.avatar.url
         else:
             # Если аватар не загружен
-            return os.path.join(settings.MEDIA_URL, 'avatars', 'avatar.jpg')
+            return os.path.join(settings.MEDIA_URL, 'avatars', 'avatar.png')
 
     def __unicode__(self):
             return u'{0} {1}'.format(self.user.first_name, self.user.last_name)

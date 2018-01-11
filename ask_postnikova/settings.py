@@ -128,4 +128,4 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
    BASE_DIR,
 )
-MEDIA_URL = '/uploads/'
+MEDIA_URL = '/static/uploads/'

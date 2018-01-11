@@ -29,26 +29,38 @@ class QuestionsView(View):
 
 class BestQuestionsView(View):
     def get(self,request):
+        avatar_url = ""
+        if request.user.is_authenticated():
+            p = Profile.objects.get(user=request.user)
+            avatar_url = p.avatar_url()
         choices = Question.objects.best_questions()
         choices = choices[:5]
         questions = paginate(choices, request)
-        return render(request, 'index.html', {'questions': questions})
+        return render(request, 'index.html', {'questions': questions,'avatar':avatar_url})
 
 
 class NewQuestionsView(View):
     def get(self,request):
+        avatar_url = ""
+        if request.user.is_authenticated():
+            p = Profile.objects.get(user=request.user)
+            avatar_url = p.avatar_url()
         choices = Question.objects.new_questions()
         questions = paginate(choices, request)
-        return render(request, 'index.html', {'questions': questions})
+        return render(request, 'index.html', {'questions': questions,'avatar':avatar_url})
 
 
 class QuestionView(View):
     def get(self,request, id):
+        avatar_url = ""
+        if request.user.is_authenticated():
+            p = Profile.objects.get(user=request.user)
+            avatar_url = p.avatar_url()
         q = Question.objects.get(pk=id)
         answers = Answer.objects.filter(question=q)
         answers = paginate(answers, request)
         form = AnswerForm
-        return render(request,"questions.html",{"question": q,"answers": answers,"form":form})
+        return render(request,"questions.html",{"question": q,"answers": answers,"form":form,'avatar':avatar_url})
 
     def post(self, request,id):
         try:
