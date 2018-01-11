@@ -67,10 +67,8 @@ class AskView(View):
 
         form = QuestionForm(data=request.POST,user=profile)
         if form.is_valid():
-            form.save()
-            q = Question.objects.latest('id')
-            q.author = profile
-            q.save()
+            form.save(commit=False)
+            form.save_m2m()
             return HttpResponseRedirect("../question/" + str(Question.objects.latest('id').id))
         return render(request, 'ask.html', {'form': form})
 

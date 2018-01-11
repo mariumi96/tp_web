@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from models import Question,User,Profile,Answer
+from models import Question,User,Profile,Answer,Tag
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -24,7 +24,9 @@ class QuestionForm(forms.ModelForm):
     def save(self, commit=True):
         question = super(QuestionForm, self).save(commit=False)
         question.author = self.user
-        question.save()
+
+        if commit == True:
+            question.save()
         return question
 
     def clean_text(self):
@@ -33,7 +35,7 @@ class QuestionForm(forms.ModelForm):
             raise forms.ValidationError(u'Too short!')
         return text
 
-'''
+
 class AnswerForm(forms.ModelForm):
 
     class Meta:
@@ -48,7 +50,7 @@ class AnswerForm(forms.ModelForm):
         if(len(text)<10):
             raise forms.ValidationError(u'Too short!')
         return text
-'''
+
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
