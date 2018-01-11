@@ -41,6 +41,7 @@ class QuestionForm(forms.ModelForm):
 class AnswerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
+        self.id = kwargs.pop('id',None)
         super(AnswerForm, self).__init__(*args, **kwargs)
     class Meta:
         model = Answer
@@ -58,7 +59,7 @@ class AnswerForm(forms.ModelForm):
     def save(self, commit=True):
         answer = super(AnswerForm, self).save(commit=False)
         answer.author = self.user
-
+        answer.question = Question.objects.get(pk=int(self.id))
         if commit == True:
             answer.save()
 
