@@ -6,7 +6,14 @@
 
       <div class="col-md-9 col-sm-6 ">
       {% block question %}
-          <div class="h_questions row"><h3><a class="new" href="{% url "new_question_url" %}">New questions</a></h3><a class="popular" href="{% url "best_question_url" %}">Popular questions</a></div>
+          <div class="h_questions row">
+           {% if tag_name %}
+               <h3 class="new">Вопросы по тэгу : {{ tag_name }}</h3>
+               {% else %}
+                <h3><a class="new" href="{% url "new_question_url" %}">New questions</a></h3>
+              <a class="popular" href="{% url "best_question_url" %}">Popular questions</a>
+           {% endif %}
+          </div>
             {% for q in questions %}
                 {% include "question.html" with title=q.title snippet=q.snippet text=q.text rating=q.rating id=q.id %}
             {% endfor %}

@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from models import Question,User,Profile
+from models import Question,User,Profile,Answer
 from django.contrib.auth.forms import UserCreationForm
+
+
 class QuestionForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(QuestionForm, self).__init__(*args, **kwargs)
+
     class Meta:
         model = Question
-        exclude=['snippet','rating','date_created']
+        exclude=['snippet','rating','date_created','author']
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
             'text':forms.Textarea(attrs={'class': 'form-control form-text'}),
-            'author': forms.Select(attrs={'class': 'form-control'}),
             'tags': forms.SelectMultiple(attrs={'class':'form-control'})
         }
         help_texts={
@@ -22,6 +27,22 @@ class QuestionForm(forms.ModelForm):
             raise forms.ValidationError(u'Too short!')
         return text
 
+'''
+class AnswerForm(forms.ModelForm):
+
+    class Meta:
+        model = Answer
+        fields=('text',)
+        widgets = {
+            'text':forms.Textarea(attrs={'class': 'form-control form-text'}),
+        }
+
+    def clean_text(self):
+        text=self.cleaned_data['text']
+        if(len(text)<10):
+            raise forms.ValidationError(u'Too short!')
+        return text
+'''
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)

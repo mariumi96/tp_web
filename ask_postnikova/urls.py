@@ -18,16 +18,18 @@ Including another URLconf
 from . import views
 from django.conf.urls import url
 from django.contrib import admin
-from views import register,QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,ask_view,settings_view,singup_view,login_view,logged_out_view
+from views import register,QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,AskView,settings_view,singup_view
+from django.contrib.auth.views import login, logout
+
 urlpatterns = [
     url(r'^$', QuestionsView.as_view(), name = "index"),
     url(r'^question/(?P<id>\d+)',QuestionView.as_view(),name="question_url"),
     url(r'^tag/(?P<tag_name>\w+)',QuestionTagView.as_view(),name="tag_url"),
-    url(r'^login/', login_view, name='login'),
+    url(r'^login/', login, {'template_name': 'login.html'},name='login'),
     url(r'^singup/', singup_view, name='singup'),
-    url(r'^ask/', ask_view, name='ask'),
+    url(r'^ask/', AskView.as_view(), name='ask'),
     url(r'^settings/', settings_view, name='settings'),
-    url(r'^logged_out/', logged_out_view, name = 'logged_out'),
+    url(r'^logged_out/', logout,{'next_page':'/'}, name = 'logged_out'),
     url(r'^best/',BestQuestionsView.as_view(),name="best_question_url"),
     url(r'^new/',NewQuestionsView.as_view(),name="new_question_url"),
     url(r'^admin/', admin.site.urls),

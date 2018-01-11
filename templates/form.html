@@ -1,3 +1,4 @@
+{% block content %}
 {% for e in form.non_field_errors %}
 <div class="alert alert-danger">{{ e }}</div>
 {% endfor %}
@@ -15,7 +16,7 @@
                </div>
              </div>
 {% endfor %}
-
-             <button type="submit" class="btn btn-primary btn-new-question">Ask!</button>
+<input type="hidden" name="next" value="/">
+             <button type="submit" class="btn btn-primary btn-new-question">{{ push }}</button>
            </form>
-
+{% endblock %}

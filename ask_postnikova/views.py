@@ -13,16 +13,14 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.views.generic import FormView
+
 
 class QuestionsView(View):
     def get(self,request):
         questions = Question.objects.all()
         questions = paginate(questions, request)
         return render(request, 'index.html', {'questions': questions})
-
-    #@method_decorator(login_required(login_url='login/'))
-    #def dispatch(self, request, *args, **kwargs):
-        #return super(QuestionsView,self).dispatch(self, request, *args, **kwargs)
 
 
 class BestQuestionsView(View):
@@ -53,39 +51,32 @@ class QuestionTagView(View):
         tag = Tag.objects.get(name=tag_name)
         choices = Question.objects.filter(tags=tag)
         questions = paginate(choices, request)
-        return render(request, 'index.html', {'questions': questions})
+        return render(request, 'index.html', {'questions': questions, 'tag_name': tag_name})
 
 
-#def ask_view(request):
-#    return render(request, 'ask.html')
-'''
 class AskView(View):
     def get(self,request):
-        if request.method == 'POST':
-            form = QuestionForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return HttpResponseRedirect("../question/" + str(Question.objects.latest('id').id))
-        else:
-            form = QuestionForm
+        form = QuestionForm
         return render(request, 'ask.html', {'form': form})
 
-    @method_decorator(login_required(login_url='login/'))
-    def dispatch(self, request, *args, **kwargs):
-         return super(AskView,self).dispatch(self, request, *args, **kwargs)
+    def post(self, request):
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = Profile(user=request.user)
 
-
-'''
-@login_required(login_url='/login/')
-def ask_view(request):
-    if request.method=='POST':
-        form = QuestionForm(request.POST)
+        form = QuestionForm(data=request.POST,instance=profile)
         if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("../question/"+str(Question.objects.latest('id').id))
-    else:
-        form=QuestionForm
-    return render(request,'ask.html',{'form':form})
+            new_question = form.save()
+            q = Question.objects.latest('id')
+            q.author = profile
+            q.save()
+            return HttpResponseRedirect("../question/" + str(Question.objects.latest('id').id))
+        return render(request, 'ask.html', {'form': form})
+
+    @method_decorator(login_required(login_url='/login/'))
+    def dispatch(self, request, *args, **kwargs):
+         return super(AskView,self).dispatch(request, *args, **kwargs)
 
 
 def singup_view(request):
@@ -104,13 +95,6 @@ def settings_view(request):
     return render(request, 'settings.html')
 
 
-def login_view(request):
-    return render(request, 'login.html')
-
-def logged_out_view(request):
-    return render(request, 'logged_out.html')
-
-
 def paginate(objects_list, request):
     # do smth with Paginator, etc...
     paginator = Paginator(objects_list, 3)  # 3 вопроса на страницу
@@ -124,7 +108,6 @@ def paginate(objects_list, request):
         # If page is out of range (e.g. 9999), deliver last page of results.
         page = paginator.page(paginator.num_pages)
     return page
-
 
 
 def register(request):
