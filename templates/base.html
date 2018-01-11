@@ -29,7 +29,7 @@
 
         <div class="usr">{{ request.user.username }}<br><a class="user-act" href="{% url "settings" %}">settings</a><a class="user-act" href={% url "logged_out" %}>logout</a></div>
         {% else %}
-            <div class="logged_out"><a class="user-act" href="{% url "login" %}">login</a><a class="user-act" href="{% url 'singup' %}">register</a></div>
+            <div class="logged_out"><a class="user-act" href="{% url "login" %}">login</a><a class="user-act" href="{% url 'signup' %}">register</a></div>
         {% endif %}
 
     </nav>

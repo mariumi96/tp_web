@@ -66,17 +66,23 @@ class AnswerForm(forms.ModelForm):
         return answer
 
 
-class RegistrationForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+class RegistrationForm(forms.ModelForm):
+    avatar = forms.ImageField()
     class Meta:
         model = User
-        fields = ("username", "email","first_name",'last_name',"password1", "password2")
+        fields = ("username", "email","first_name",'last_name',"password","avatar")
 
+        widgets = {
+        'avatar': forms.ImageField()
+    }
+#без аватара
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data['email']
         if commit:
             user.save()
+            profile = Profile(user=user,avatar=self.cleaned_data['avatar'])
+            profile.save()
         return user
 
 

@@ -91,29 +91,6 @@ class AskView(View):
     def dispatch(self, request, *args, **kwargs):
          return super(AskView,self).dispatch(request, *args, **kwargs)
 
-'''
-class AnswerView(View):
-    def get(self,request):
-        form = AnswerForm
-        return render(request, 'questions.html', {'form': form})
-
-    def post(self, request):
-        try:
-            profile = Profile.objects.get(user=request.user)
-        except Profile.DoesNotExist:
-            profile = Profile(user=request.user)
-
-        form = QuestionForm(data=request.POST,user=profile)
-        if form.is_valid():
-            form.save()
-            form.save_m2m()
-            return HttpResponseRedirect("../question/" + str(Question.objects.latest('id').id))
-        return render(request, 'ask.html', {'form': form})
-
-    @method_decorator(login_required(login_url='/login/'))
-    def dispatch(self, request, *args, **kwargs):
-         return super(AnswerView,self).dispatch(request, *args, **kwargs)
-'''
 
 def singup_view(request):
     if request.method=='POST':
@@ -208,24 +185,14 @@ def register(request):
     return render(request, 'singup.html', {'errors': [], 'formdata': form})
 
 
-'''
-from ask.models import AuthorForm
-def index(request):
-    return render(request,'authors.html',{'articles':models.Article.objects.all().prefetch_related('author')})
+class SignUpView(View):
+    def get(self,request):
+        form = RegistrationForm
+        return render(request, 'signup.html', {'form': form})
 
-def create_author(request):
-
-    if request.method == 'POST':
-        form=AuthorForm(request.POST)
+    def post(self, request):
+        form = RegistrationForm(data=request.POST)
         if form.is_valid():
-        #birthday = form.cleaned_data['birthday']
-        #name = form.cleaned_data['name']
-        #models.Author.objects.create(birthday=birthday,name=name)
-        form.save()
-        ###
-        return redirect('/')
-    else:
-        form = AuthorForm()
-
-    return render(request,'ask.html',{'form': form})
-'''
+            form.save()
+            return HttpResponseRedirect('/login/')
+        return render(request, 'signup.html', {'form': form})

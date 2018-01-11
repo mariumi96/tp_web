@@ -152,6 +152,7 @@ border:2px solid #ff8b8c;
     width:26px;
     height:26px;
     margin-top:8px;
+    margin-left: 30px;
     background-image: url(../img/like.png);
     background-size:26px 26px;
 }

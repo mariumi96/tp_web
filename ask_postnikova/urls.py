@@ -18,7 +18,7 @@ Including another URLconf
 from . import views
 from django.conf.urls import url
 from django.contrib import admin
-from views import register,QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,AskView,settings_view,singup_view
+from views import register,QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,AskView,settings_view,SignUpView
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
@@ -26,7 +26,7 @@ urlpatterns = [
     url(r'^question/(?P<id>\d+)',QuestionView.as_view(),name="question_url"),
     url(r'^tag/(?P<tag_name>\w+)',QuestionTagView.as_view(),name="tag_url"),
     url(r'^login/', login, {'template_name': 'login.html'},name='login'),
-    url(r'^singup/', singup_view, name='singup'),
+    url(r'^signup/', SignUpView.as_view(), name='signup'),
     url(r'^ask/', AskView.as_view(), name='ask'),
     url(r'^settings/', settings_view, name='settings'),
     url(r'^logged_out/', logout,{'next_page':'/'}, name = 'logged_out'),
