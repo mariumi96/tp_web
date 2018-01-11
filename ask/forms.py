@@ -27,6 +27,8 @@ class QuestionForm(forms.ModelForm):
 
         if commit == True:
             question.save()
+
+
         return question
 
     def clean_text(self):
