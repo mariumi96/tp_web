@@ -18,9 +18,13 @@ from django.views.generic import FormView
 
 class QuestionsView(View):
     def get(self,request):
+        avatar_url = ""
+        if request.user.is_authenticated():
+            p = Profile.objects.get(user=request.user)
+            avatar_url = p.avatar_url()
         questions = Question.objects.all()
         questions = paginate(questions, request)
-        return render(request, 'index.html', {'questions': questions})
+        return render(request, 'index.html', {'questions': questions,'avatar':avatar_url})
 
 
 class BestQuestionsView(View):
