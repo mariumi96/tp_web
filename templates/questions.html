@@ -42,13 +42,14 @@
 {% endif %}
 <br>
     {% if request.user.is_authenticated %}
-<form class="new-question">
+<!--<form class="new-question">
   <div class="form-group row">
       <textarea class="form-control your-answ" rows="10" placeholder="Enter your answer here"></textarea>
   </div>
 
   <button type="submit" class="btn btn-primary btn-answ">Answer</button>
-</form>
+</form>-->
+        {% include "form.html" with push="Ask!" %}
 {% endif %}
 {% endblock %}
 {% block questions-pagination %}

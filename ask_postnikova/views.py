@@ -51,12 +51,14 @@ class QuestionView(View):
             profile = Profile.objects.get(user=request.user)
         except Profile.DoesNotExist:
             profile = Profile(user=request.user)
-
+        q = Question.objects.get(pk=id)
+        answers = Answer.objects.filter(question=q)
+        answers = paginate(answers, request)
         form = AnswerForm(data=request.POST,user=profile)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect("../question/" + str(Question.objects.get('id').id))
-        return render(request, 'ask.html', {'form': form})
+        return render(request, 'questions.html', {'form': form})
 
 
 class QuestionTagView(View):

@@ -39,7 +39,9 @@ class QuestionForm(forms.ModelForm):
 
 
 class AnswerForm(forms.ModelForm):
-
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(AnswerForm, self).__init__(*args, **kwargs)
     class Meta:
         model = Answer
         fields=('text',)
@@ -52,6 +54,15 @@ class AnswerForm(forms.ModelForm):
         if(len(text)<10):
             raise forms.ValidationError(u'Too short!')
         return text
+
+    def save(self, commit=True):
+        answer = super(AnswerForm, self).save(commit=False)
+        answer.author = self.user
+
+        if commit == True:
+            answer.save()
+
+        return answer
 
 
 class RegistrationForm(UserCreationForm):
