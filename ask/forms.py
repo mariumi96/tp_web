@@ -126,8 +126,7 @@ class RegistrationForm(forms.ModelForm):
         return passwd
 
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
+        user = User.objects.create_user(self.cleaned_data['username'],self.cleaned_data['email'], self.cleaned_data['password'])
         if commit:
             user.save()
             profile = Profile(user=user,avatar=self.cleaned_data['avatar'])
