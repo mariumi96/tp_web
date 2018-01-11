@@ -92,18 +92,6 @@ class AskView(View):
          return super(AskView,self).dispatch(request, *args, **kwargs)
 
 
-def singup_view(request):
-    if request.method=='POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect("/")
-    else:
-        form=RegistrationForm
-    return render(request,'singup.html',{'form':form})
-
-
-
 def settings_view(request):
     return render(request, 'settings.html')
 
@@ -191,7 +179,7 @@ class SignUpView(View):
         return render(request, 'signup.html', {'form': form})
 
     def post(self, request):
-        form = RegistrationForm(data=request.POST)
+        form = RegistrationForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/login/')

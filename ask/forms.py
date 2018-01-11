@@ -68,14 +68,17 @@ class AnswerForm(forms.ModelForm):
 
 class RegistrationForm(forms.ModelForm):
     avatar = forms.ImageField()
+    confirm_password = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = User
-        fields = ("username", "email","first_name",'last_name',"password","avatar")
+        fields = ("username", "email","first_name",'last_name',"password","confirm_password","avatar")
 
         widgets = {
-        'avatar': forms.ImageField()
+        'password': forms.PasswordInput(),
     }
-#без аватара
+
+    #def clean_recipients(self):
+
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
         user.email = self.cleaned_data['email']

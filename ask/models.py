@@ -16,7 +16,7 @@ GOOD_RATING = 2
 class Profile(models.Model):
 
     # Откуда будут загружены аватары
-    avatar = models.ImageField(upload_to="avatars/")
+    avatar = models.ImageField(upload_to="avatars/",default="avatars/user.png")
 
     # Связь 1-к-1
     user = models.OneToOneField(User)
