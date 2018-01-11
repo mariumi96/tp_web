@@ -110,17 +110,9 @@ def paginate(objects_list, request):
         page = paginator.page(paginator.num_pages)
     return page
 
-
+'''
 def register(request):
-    errors = []
-    form = {}
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        if not username:
-            errors.append("Введите имя пользователя")
-        elif len(username) < 5:
-            errors.append("Имя пользователя должно содержать не менее 5 символов")
-
+   
         email = request.POST.get('email')
         if not email:
             errors.append("Введите адрес эл. почты")
@@ -137,19 +129,8 @@ def register(request):
         else:
             form['lastname'] = lastname
 
-        password = request.POST.get('password')
-        if not password:
-            errors.append("Введите пароль")
-        elif len(password) < 8:
-            errors.append("Пароль должен содержать не менее 8 символов")
-        else:
-            confirmpass = request.POST.get('confirmpass')
-            if not confirmpass:
-                errors.append("Подтвердите пароль")
-            elif password != confirmpass:
-                errors.append("Пароли не совпадают")
-                form['confirmpass'] = confirmpass
-            form['password'] = password
+        
+
 
         sameusers = []
         try:
@@ -171,7 +152,7 @@ def register(request):
         return HttpResponseRedirect("/login/")
 
     return render(request, 'singup.html', {'errors': [], 'formdata': form})
-
+'''
 
 class SignUpView(View):
     def get(self,request):

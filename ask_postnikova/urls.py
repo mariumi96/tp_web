@@ -18,7 +18,7 @@ Including another URLconf
 from . import views
 from django.conf.urls import url
 from django.contrib import admin
-from views import register,QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,AskView,settings_view,SignUpView
+from views import QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,AskView,settings_view,SignUpView
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [

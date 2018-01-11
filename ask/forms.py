@@ -75,9 +75,55 @@ class RegistrationForm(forms.ModelForm):
 
         widgets = {
         'password': forms.PasswordInput(),
-    }
+        }
+        help_texts = {
+            'username': "Ваш никнейм (латиница). Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.",
+            'password': "Пароль должен состоять из 8 или более символов и не должен содержать только цифры"
 
-    #def clean_recipients(self):
+        }
+
+    def clean_username(self):
+        username=self.cleaned_data['username']
+        if not username:
+            raise forms.ValidationError("Введите имя пользователя")
+        elif len(username) < 5:
+            raise forms.ValidationError("Имя пользователя должно содержать не менее 5 символов")
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not email:
+            raise forms.ValidationError("Введите адрес эл. почты")
+        return email
+
+    def clean_first_name(self):
+        firstname = self.cleaned_data['first_name']
+        if not firstname:
+            raise forms.ValidationError("Введите своё имя")
+        return firstname
+
+    def clean_last_name(self):
+        lastname = self.cleaned_data['last_name']
+        if not lastname:
+            raise forms.ValidationError("Введите свою фамилию")
+        return lastname
+
+    def clean_confirm_password(self):
+        passwd = self.cleaned_data['password']
+        passwd_to_check = self.cleaned_data['confirm_password']
+        if not passwd_to_check:
+            raise forms.ValidationError("Подтвердите пароль")
+        elif passwd != passwd_to_check:
+            raise forms.ValidationError("Пароли не совпадают")
+        return passwd_to_check
+
+    def clean_password(self):
+        passwd = self.cleaned_data['password']
+        if not passwd:
+            raise forms.ValidationError("Введите пароль")
+        elif len(passwd) < 8:
+            raise forms.ValidationError("Пароль должен содержать не менее 8 символов")
+        return passwd
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
