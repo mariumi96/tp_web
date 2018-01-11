@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib import auth
 from django.views.generic import View
 from ask.models import Question,Answer,Tag,Profile
-from ask.forms import QuestionForm,RegistrationForm
+from ask.forms import QuestionForm,RegistrationForm,AnswerForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
@@ -43,7 +43,20 @@ class QuestionView(View):
         q = Question.objects.get(pk=id)
         answers = Answer.objects.filter(question=q)
         answers = paginate(answers, request)
-        return render(request,"questions.html",{"question": q,"answers": answers})
+        form = AnswerForm
+        return render(request,"questions.html",{"question": q,"answers": answers,"form":form})
+
+    def post(self, request,id):
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = Profile(user=request.user)
+
+        form = AnswerForm(data=request.POST,user=profile)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect("../question/" + str(Question.objects.get('id').id))
+        return render(request, 'ask.html', {'form': form})
 
 
 class QuestionTagView(View):
@@ -76,6 +89,29 @@ class AskView(View):
     def dispatch(self, request, *args, **kwargs):
          return super(AskView,self).dispatch(request, *args, **kwargs)
 
+'''
+class AnswerView(View):
+    def get(self,request):
+        form = AnswerForm
+        return render(request, 'questions.html', {'form': form})
+
+    def post(self, request):
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            profile = Profile(user=request.user)
+
+        form = QuestionForm(data=request.POST,user=profile)
+        if form.is_valid():
+            form.save()
+            form.save_m2m()
+            return HttpResponseRedirect("../question/" + str(Question.objects.latest('id').id))
+        return render(request, 'ask.html', {'form': form})
+
+    @method_decorator(login_required(login_url='/login/'))
+    def dispatch(self, request, *args, **kwargs):
+         return super(AnswerView,self).dispatch(request, *args, **kwargs)
+'''
 
 def singup_view(request):
     if request.method=='POST':
