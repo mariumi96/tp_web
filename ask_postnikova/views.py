@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import get_object_or_404
 from django.contrib import auth
 from django.views.generic import View
-from ask.models import Question,Answer,Tag,Profile
+from ask.models import Question,Answer,Tag,Profile,Like
 from ask.forms import QuestionForm,RegistrationForm,AnswerForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -24,6 +24,8 @@ class QuestionsView(View):
             avatar_url = p.avatar_url()
         questions = Question.objects.all()
         questions = paginate(questions, request)
+
+
         return render(request, 'index.html', {'questions': questions,'avatar':avatar_url})
 
 
@@ -181,3 +183,25 @@ class SignUpView(View):
             form.save()
             return HttpResponseRedirect('/login/')
         return render(request, 'signup.html', {'form': form})
+
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
+@login_required(login_url='/login/')
+def like_view(request):
+    #print(request.POST['id'])
+    q = Question.objects.get(pk=int(request.POST['id']))
+    #print (q.get_rating())
+    p = Profile.objects.get(user=request.user)
+    try:
+        like = Like.objects.get(question=q,author=p)
+        #print ('like найден')
+    except:
+        like = Like(question=q,author=p)
+        like.save()
+        #print ('like не найден, создан')
+    likes = q.get_rating()
+    return HttpResponse(likes)
+
+
+
+

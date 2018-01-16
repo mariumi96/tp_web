@@ -305,3 +305,10 @@ margin-bottom: -53px;
     height:300px;
 
 }
+.my-btn{
+    -webkit-appearance: media-slider;
+}
+.like-btn{
+    height:30px;
+    width:30px;
+}

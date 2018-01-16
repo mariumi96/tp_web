@@ -18,7 +18,7 @@ Including another URLconf
 from . import views
 from django.conf.urls import url
 from django.contrib import admin
-from views import QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,AskView,settings_view,SignUpView
+from views import QuestionsView,BestQuestionsView,NewQuestionsView,QuestionTagView, QuestionView,AskView,settings_view,SignUpView,like_view
 from django.contrib.auth.views import login, logout
 
 urlpatterns = [
@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^best/',BestQuestionsView.as_view(),name="best_question_url"),
     url(r'^new/',NewQuestionsView.as_view(),name="new_question_url"),
     url(r'^admin/', admin.site.urls),
+    url(r'^like/',like_view),
 ]

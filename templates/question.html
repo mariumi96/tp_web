@@ -1,10 +1,28 @@
+<script>
+    function test() {
+        var xhr = new XMLHttpRequest();
+        var body = 'id=' + encodeURIComponent(this.id);
+        xhr.open("POST", '/like/', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        // вывести результат
+        var result = 0;
+        xhr.onreadystatechange = function() {
+        if (this.readyState !== 4) return;
 
+        result = Number(this.responseText);
+        document.getElementById('rating').innerHTML = result;
+        };
+        //document.getElementById('rating').innerHTML = result;
+        xhr.send(body);
+    }
+
+</script>
        <div class="question row">
 
          <div class="col-md-2">
 
             <a href=#><img class="q-avatar" src="/static/img/question.jpg"></a>
-             <button type="button" id="like" onclick="alert();"><img src="/static/img/like.png"></button><a href="#" class="likes">{{ rating }}</a>
+        <button class="my-btn" type="button" id="{{ q.id }}" onclick="test.call(this);"><img class="like-btn" src="/static/img/like.png"></button><span class="likes" id="rating">{{ get_rating }}</span>
 
 
          </div>

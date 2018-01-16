@@ -15,7 +15,7 @@
            {% endif %}
           </div>
             {% for q in questions %}
-                {% include "question.html" with title=q.title snippet=q.snippet text=q.text rating=q.rating id=q.id %}
+                {% include "question.html" with title=q.title snippet=q.snippet text=q.text rating=q.rating id=q.id get_rating=q.get_rating %}
             {% endfor %}
           {% endblock %}
       {% block answers %}

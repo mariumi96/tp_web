@@ -8,14 +8,14 @@ from django.db import models
 from django.contrib.auth.models import User
 # Fields: username, firstname, lastname,email, password, groups, user_permissions,...
 import os
-from ask_postnikova import settings
+#from ask_postnikova import settings
 
 GOOD_RATING = 2
 
 
 class Profile(models.Model):
 
-    # Откуда будут загружены аватары
+    # Куда будут загружены аватары
     avatar = models.ImageField(upload_to="uploads/avatars/",default="uploads/avatars/avatar.png")
 
     # Связь 1-к-1
@@ -27,7 +27,8 @@ class Profile(models.Model):
             return self.avatar.url
         else:
             # Если аватар не загружен
-            return os.path.join(settings.MEDIA_URL, 'avatars', 'avatar.png')
+            pass
+            #return os.path.join(settings.MEDIA_URL, 'avatars', 'avatar.png')
 
     def __unicode__(self):
             return u'{0} {1}'.format(self.user.first_name, self.user.last_name)
@@ -59,6 +60,7 @@ class Question(models.Model):
     # Связь многие-к-1 : у одного пользователя может быть несколько вопросов
     author = models.ForeignKey(Profile)
 
+
     rating = models.IntegerField(default=0)
     date_created = models.DateTimeField(default=timezone.now)
 
@@ -82,6 +84,11 @@ class Question(models.Model):
         answers = Answer.objects.filter(question=q)
         return answers.count()
 
+    def get_rating(self):
+        q = Question.objects.get(pk=self.id)
+        likes = Like.objects.filter(question=q)
+        return likes.count()
+
     def __unicode__(self):
         return u'{0}'.format(self.title)
 
@@ -89,6 +96,8 @@ class Question(models.Model):
         ordering = ['-title']
         verbose_name = 'Вопрос'
         verbose_name_plural = 'Вопросы'
+
+
 
 
 class Answer(models.Model):
