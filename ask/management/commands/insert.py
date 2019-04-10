@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from ask.models import *
 from django.core.management import BaseCommand
+import lorem
 from django.contrib.auth.models import User
     #The class must be named Command, and subclass BaseCommand
 class Command(BaseCommand):
@@ -81,10 +82,14 @@ class Command(BaseCommand):
         print(ch)
         
     '''
-    u=User.objects.get(username='artsmile')
-    p=Profile.objects.get(user=u)
-    p.avatar="5.png"
-    p.save()
+    '''
+    # Использование lorem
+    
+    p = Profile.objects.get(pk=2)
+    for i in range(30):
+        q = Question(title=lorem.sentence(), snippet=lorem.paragraph() , text=lorem.text(), rating=i, author=p)
+        q.save()
+    '''
     # A command must define handle()
     def handle(self, *args, **options):
         self.stdout.write("Doing All The Things!")

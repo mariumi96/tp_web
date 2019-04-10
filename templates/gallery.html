@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block menu %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "index" %}">Главная</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "forum" %}">Форум</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "test" %}">Пройти тест</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "articles" %}">Для любознательных</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link active" href="{% url "gallery" %}">Фотографии</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "about" %}">Об авторе</a>
+  </li>
+{%  endblock %}
+    {% block content %}
+<div class="container wrap">
+
+    <div class="question row">
+
+<div class="card-body">
+    <h5 class="card-title">Фотографии ваших питомцев</h5>
+    <p class="card-text">...
+
+</p>
+  </div>
+      </div>
+
+
+
+    </div>
+
+<!-- /.container -->
+
+    {% endblock %}
+{% block js %}
+    <script>
+
+    </script>
+{% endblock %}

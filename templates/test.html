@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block menu %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "index" %}">Главная</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "forum" %}">Форум</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="{% url "test" %}">Пройти тест</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "articles" %}">Для любознательных</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "gallery" %}">Фотографии</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "about" %}">Об авторе</a>
+  </li>
+{%  endblock %}
+    {% block content %}
+<div class="container wrap">
+
+    <div class="question row">
+<div class="card-body">
+    {% if not number %}
+    <h5 class="card-title">Прежде, чем перейти к тестированию</h5>
+    <p class="card-text">Ознакомительный текст. Данная система направлена на то, чтобы помочь пользователю при выборе домашнего питмоца.
+        При этом учитываются как индивидуальные особенности человека,его образа жизни так и личные предпочтения.
+        На основе полученных данных система выдаст наиболее подходящий вариант, а также проранжирует полученные результаты.
+    </p>
+    <div class="center">
+        <img src = "/static/img/pet.jpg">
+    </div>
+    <div class = "center test">    <a href="{% url "test_url" 1 %}" class="btn btn-primary">Перейти к тестированию -></a></div>
+    {% else %}
+     <h5 class="card-title">Вопрос №{{ number }}</h5>
+    <div class="center">
+        Место для картинки
+    </div>
+            <p class="card-text">{{ question.text }}
+    </p>
+         <form method="post">
+        {% for answer in answers %}
+        <div class="form-check">
+        {% csrf_token %}
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={{ answer.pk }}>
+  <label class="form-check-label" for="exampleRadios1">
+    {{ answer.text }}
+  </label>
+</div>
+        {% endfor %}
+    <div class = "center test">
+ {% if next_number != 0 %}
+        <button onclick="{% url "test_url" next_number %}" type="submit" class="btn btn-primary">Следующий вопрос -></button></div>
+     {% else %}
+
+     <button onclick="{% url "result" %}" type = "submit" class="btn btn-primary">Посмотреть результат</button></div>
+     {% endif %}
+          </form>
+    {% endif %}
+  </div>
+      </div>
+
+
+
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    {% endblock %}

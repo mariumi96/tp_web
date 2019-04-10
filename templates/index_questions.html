@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+    {% block content %}
+<div class="container wrap">
+
+    <div class="row">
+
+      <div class="col-md-9 col-sm-6 ">
+      {% block question %}
+          <div class="h_questions row">
+           {% if tag_name %}
+               <h3 class="new">Вопросы по тэгу : {{ tag_name }}</h3>
+               {% else %}
+                <h3><a class="new" href="{% url "new_question_url" %}">Новые вопросы</a></h3>
+              <a class="popular" href="{% url "best_question_url" %}">Популярное</a>
+           {% endif %}
+          </div>
+            {% for q in questions %}
+                {% include "question.html" with title=q.title snippet=q.snippet text=q.text rating=q.rating id=q.id get_rating=q.get_rating %}
+            {% endfor %}
+          {% endblock %}
+      {% block answers %}
+          {% endblock %}
+      </div>
+        <div class="col-md-3 col-sm-6 right-col">
+<div class="new"><h3>Popular tags</h3></div>
+<div class="question row right-col">
+            <div class="headers">
+            <b class="red-label header">MySQL</b><b class="blue-label header">Ruby</b><b class="green-label header">C++</b><b class="purple-label header">Tarantool</b>
+                <b class="blue-label header">PHP</b><b class="green-label header">python</b><b class="purple-label header">perl</b><b class="orange-label header">Mail.ru</b>
+                <b class="green-label header">django</b><b class="orange-label header">FireFox</b><b class="blue-label header">Apache</b>
+                <b class="red-label header">nginx</b><b class="purple-label header">gunicorn</b>
+            </div>
+</div>
+            <div class="new"><h3>Best members</h3></div>
+            <div class="question row right-col">
+            <div class="members">
+            <a href="#">Dr.Pepper</a>
+            <br>
+            <a href="#">Dr.House</a>
+                <br>
+                <a href="#">V.Pupkin</a>
+            <br>
+            <a href="#">Bender</a>
+                <br>
+                <a href="#">Mr.Freeman</a>
+            <br>
+            <a href="#">Queen Victoria</a>
+            </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% block questions-pagination %}
+
+{% if questions.has_other_pages %}
+
+   {% include "paginator.html" with pagination=questions %}
+{% endif %}
+
+    {% endblock %}
+</div>
+<!-- /.container -->
+
+    {%  endblock %}
+{% block js %}
+    <script>
+
+    </script>
+{% endblock %}

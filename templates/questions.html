@@ -1,38 +1,28 @@
-{% extends "index.html" %}
-{% block question %}
+{% extends "base.html" %}
+{% block menu %}
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "index" %}">Главная</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="{% url "forum" %}">Форум</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url "test" %}">Пройти тест</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "articles" %}">Для любознательных</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "gallery" %}">Фотографии</a>
+  </li>
+        <li class="nav-item">
+    <a class="nav-link" href="{% url "about" %}">Об авторе</a>
+  </li>
+{%  endblock %}
+{% block content %}
+    <div class="container wrap">
 <div class="question row">
-
-         <div class="col-md-2">
-
-            <a href=#><img class="q-avatar" src="/static/img/question.jpg"></a>
-             <button type="button" id="like" onclick="alert();"><img class="like-btn" src="/static/img/like.png"></button><a href="#" class="likes">{{ question.rating }}</a>
-
-
-
-         </div>
-
-         <div class="col-md-10">
-
-           <div class="q-title">  <a href="{% url "question_url" question.id %}">{{ question.title }}</a></div>
-           <div class="q-text">
-               {{ question.text }}
-               <br>
-               <div class="tags">
-               <a href="#">answer({{ question.get_answers_count }})</a>
-               Tags: {% for tag in question.tags.all %}
-                       <a href="{% url "tag_url" tag.name %}">{{ tag.name }}</a>
-                   {% endfor %}
-               </div>
-           </div>
-
-
-
-
-         </div>
-
-
-</div>
-{% endblock %}
+{% include "question.html" with title=question.title snippet=question.snippet text=question.text rating=question.rating id=question.id get_rating=question.get_rating %}
 {% block answers %}
     {% for a in answers %}
                 {% include "one_answer.html" with author=a.author text=a.text author=a.author rating=a.rating %}
@@ -43,15 +33,13 @@
 {% endif %}
 <br>
     {% if request.user.is_authenticated %}
-<!--<form class="new-question">
-  <div class="form-group row">
-      <textarea class="form-control your-answ" rows="10" placeholder="Enter your answer here"></textarea>
-  </div>
-
-  <button type="submit" class="btn btn-primary btn-answ">Answer</button>
-</form>-->
-        {% include "form.html" with push="Answer!" %}
+        <div class="answer-form">
+        {% include "form.html" with push="Ответить" %}
+        </div>
 {% endif %}
 {% endblock %}
+</div>
+    </div>
+    {% endblock %}
 {% block questions-pagination %}
     {% endblock %}
