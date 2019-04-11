@@ -16,7 +16,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-
+from django.views.decorators.csrf import csrf_exempt
 class QuestionsView(View):
     def get(self,request):
         avatar_url = ""
@@ -69,32 +69,36 @@ class ResultView(View):
                     'a': answer.text
                 })
         # add results analytics with pyknow
-        return render(request, 'result.html',{'avatar':avatar_url, 'results': results})
 
+        return render(request, 'result.html',{'avatar':avatar_url, 'results': results})
 
 class TestQuestionView(View):
     def get(self, request,id):
         q = TestQuestion.objects.get(order=id)
-        if TestQuestion.objects.filter(order=(int(id)+1)):
-            n = int(id)+1
-        else:
-            n = 0
         a = TestAnswer.objects.filter(question=q)
         avatar_url = ""
         if request.user.is_authenticated:
             p = Profile.objects.get(user=request.user)
             avatar_url = p.avatar_url()
-        return render(request, 'test.html',{'avatar':avatar_url, 'number': id,'next_number':n,'question':q, 'answers':a})
+        return render(request, 'test.html',{'avatar':avatar_url, 'number': id,'question':q, 'answers':a})
 
     def post(self, request,id):
         selected = request.POST.get('exampleRadios')
         a_selected = TestAnswer.objects.get(pk=selected)
         a_selected.selected = True
         a_selected.save()
-        if TestQuestion.objects.filter(order=(int(id)+1)):
-            return HttpResponseRedirect("../test/" + str(int(id) + 1))
+        q = TestQuestion.objects.get(pk=id)
+        print(q)
+        print(q.next_q1, q.next_q2)
+        if (a_selected.text == 'Да' or a_selected.text == 'Нравится' or a_selected.text == 'Дом' or a_selected.text == 'Часто'):
+            next_q = q.next_q1
+        else:
+            next_q = q.next_q2
+        if next_q != 0:
+            return HttpResponseRedirect("../test/" + str(next_q))
         else:
             return HttpResponseRedirect("../result/")
+
 
 
 

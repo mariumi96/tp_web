@@ -43,9 +43,10 @@
             <p class="card-text">{{ question.text }}
     </p>
          <form method="post">
+         {% csrf_token %}
         {% for answer in answers %}
         <div class="form-check">
-        {% csrf_token %}
+
   <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value={{ answer.pk }}>
   <label class="form-check-label" for="exampleRadios1">
     {{ answer.text }}
@@ -53,8 +54,8 @@
 </div>
         {% endfor %}
     <div class = "center test">
- {% if next_number != 0 %}
-        <button onclick="{% url "test_url" next_number %}" type="submit" class="btn btn-primary">Следующий вопрос -></button></div>
+ {% if True %}
+        <button onclick="{% url "test_url" number %}" type="submit" class="btn btn-primary">Следующий вопрос -></button></div>
      {% else %}
 
      <button onclick="{% url "result" %}" type = "submit" class="btn btn-primary">Посмотреть результат</button></div>

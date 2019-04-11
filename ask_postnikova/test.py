@@ -45,8 +45,36 @@ class RobotCrossStreet(KnowledgeEngine):
 
 engine = RobotCrossStreet()
 engine.reset()
-engine.declare(Light(color=choice(['green', 'yellow', 'blinking-yellow', 'red'])))
+engine.declare(Light(color=choice(['green', 'yellow', 'blinking-yellow', 'red']))) # значение
 engine.run()
+
+class Pet(Fact):
+    """Info about the traffic light."""
+    pass
+
+class RobotChoosingPet(KnowledgeEngine):
+    @Rule(Pet(wool='long'))
+    def fluffy_pet(self):
+        print("A lot of fur")
+
+    @Rule(Pet(wool='medium'))
+    def mediumi_fluffy_pet(self):
+        print("Some fur")
+    '''
+    @Rule(AS.light << Light(color=L('yellow') | L('blinking-yellow')))
+    def cautious(self, light):
+        print("Be cautious because light is", light["color"])
+    '''
+
+
+engine = RobotChoosingPet()
+engine.reset()
+#engine.declare(Light(color=choice(['green', 'yellow', 'blinking-yellow', 'red']))) # значение
+engine.run()
+
+
+
+
 
 '''
 @Rule(

@@ -200,6 +200,8 @@ class Pets(models.Model):
 class TestQuestion(models.Model):
     order = models.IntegerField(default='1',unique=True)
     text = models.TextField()
+    next_q1 = models.IntegerField(default='1')
+    next_q2 = models.IntegerField(default='1')
     class Meta:
         verbose_name = 'Вопрос теста'
         verbose_name_plural = 'Вопросы теста'
