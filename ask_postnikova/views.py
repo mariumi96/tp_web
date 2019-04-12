@@ -6,7 +6,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import get_object_or_404
 from django.contrib import auth
 from django.views.generic import View
-from ask.models import Question,Answer,Tag,Profile,Like, TestAnswer,TestQuestion
+from ask.models import Question,Answer,Tag,Profile,Like, TestAnswer,TestQuestion, Animal, Cat, Breed, Carnivora
 from ask.forms import QuestionForm,RegistrationForm,AnswerForm,SettingsForm
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -17,6 +17,7 @@ from django.views.generic import FormView
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
+props_dict = {}
 class QuestionsView(View):
     def get(self,request):
         avatar_url = ""
@@ -30,6 +31,15 @@ class QuestionsView(View):
 
 class WelcomeView(View):
     def get(self, request):
+        # get all cats with zero points
+        '''
+        cats = Cat.objects.filter(breed__points=0)  # 0 for none wool, needs mapping
+        carnivora = Carnivora.objects.filter(cat__breed__points=0)
+        for cat in cats:
+            print(cat)
+        for animal in carnivora:
+            print(animal.cat)
+        '''
         avatar_url = ""
         if request.user.is_authenticated:
             p = Profile.objects.get(user=request.user)
@@ -57,6 +67,15 @@ class ResultView(View):
             p = Profile.objects.get(user=request.user)
             avatar_url = p.avatar_url()
         # get results
+        print(props_dict)
+        # map ids to variables
+        # 1 for isAllergic toWool
+        # 2 for isAllergicToFeather
+        if '1' in props_dict.keys():
+            props_dict['isAllergicToWool'] = props_dict.pop('1')
+        if '2' in props_dict.keys():
+            props_dict['isAllergicToFeather'] = props_dict.pop('2')
+        print(props_dict)
         results = []
         answers = TestAnswer.objects.all()
         for answer in answers:
@@ -88,11 +107,13 @@ class TestQuestionView(View):
         a_selected.selected = True
         a_selected.save()
         q = TestQuestion.objects.get(pk=id)
-        print(q)
-        print(q.next_q1, q.next_q2)
+        #print(q)
+        #print(q.next_q1, q.next_q2)
         if (a_selected.text == 'Да' or a_selected.text == 'Нравится' or a_selected.text == 'Дом' or a_selected.text == 'Часто'):
+            props_dict.update({id:True})
             next_q = q.next_q1
         else:
+            props_dict.update({id: False})
             next_q = q.next_q2
         if next_q != 0:
             return HttpResponseRedirect("../test/" + str(next_q))

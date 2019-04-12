@@ -232,7 +232,7 @@ class Breed(models.Model):
     points = models.IntegerField(default=0)
 
     class Meta:
-        abstract = True
+        #abstract = True
         verbose_name = 'Порода'
         verbose_name_plural = 'Породы'
 
@@ -265,19 +265,19 @@ class RodentType(Breed):
 
 class Animal(models.Model):
     class Meta:
-        abstract = True
+        #abstract = True
         verbose_name = 'Животное'
         verbose_name_plural = 'Животные'
 
 
 class Carnivora(Animal):
     class Meta:
-        abstract = True
+        #abstract = True
         verbose_name = 'Хищное'
         verbose_name_plural = 'Хищные'
 
 class Cat(Carnivora):
-    breed = models.ForeignKey(CatBreed, on_delete=models.CASCADE)
+    breed = models.ForeignKey(CatBreed, default='0', on_delete=models.CASCADE)
     class Meta:
         verbose_name = 'Кошка'
         verbose_name_plural = 'Кошки'
