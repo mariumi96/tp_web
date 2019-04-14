@@ -16,8 +16,33 @@ from django.utils.decorators import method_decorator
 from django.views.generic import FormView
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
+from pyknow import *
+arrProps = ['isAllergicToWool', 'isAllergicToFeather', 'likesBirdSinging', 'hasFragileThings', 'likesPair',
+            'likesExotic', 'isActive', 'takeInArms', 'likesNoSmell', 'likesStroll',
+            'likesBringingUp', 'likesNoNoise', 'oftenAtHome', 'likesFluffy', 'hyberactive',
+            'likesCleaning', 'needsKindness', 'lonely', 'livesInHouse', 'likesGrooming',
+            'likesRunning', 'likesToTrain', 'livesInSmallFlat','playful']
 props_dict = {}
+# default: False
+for prop in arrProps:
+    props_dict[prop] = False
+
+client_results = Animal.objects.all()
+
+class Client(Fact):
+    """Info about the pet."""
+    pass
+
+
+class RobotChoosingPet(KnowledgeEngine):
+    @Rule(Client(isAllergicToWool=True))
+    def non_fur_pet(self):
+        print("You need pet without fur")
+
+    @Rule(Client(isAllergicToFeather=True))
+    def no_bird_pet(self):
+        print("You can't consider birds")
+
 class QuestionsView(View):
     def get(self,request):
         avatar_url = ""
@@ -68,26 +93,58 @@ class ResultView(View):
             avatar_url = p.avatar_url()
         # get results
         print(props_dict)
-        # map ids to variables
-        # 1 for isAllergic toWool
-        # 2 for isAllergicToFeather
-        if '1' in props_dict.keys():
-            props_dict['isAllergicToWool'] = props_dict.pop('1')
-        if '2' in props_dict.keys():
-            props_dict['isAllergicToFeather'] = props_dict.pop('2')
-        print(props_dict)
+
+        # result analysis by pyknow
+        engine = RobotChoosingPet()
+        engine.reset()
+        engine.declare(Client(isAllergicToWool=props_dict['isAllergicToWool'], isAllergicToFeather=props_dict['isAllergicToFeather'],
+                              likesBirdSinging =props_dict['likesBirdSinging'], hasFragileThings =props_dict['hasFragileThings'],
+                              likesPair = props_dict['likesPair'], likesExotic = props_dict['likesExotic'],
+                              isActive = props_dict['isActive'], takeInArms = props_dict['takeInArms'],
+                              likesNoSmell = props_dict['likesNoSmell'], likesStroll = props_dict['likesStroll'],
+                              likesBringingUp = props_dict['likesBringingUp'], likesNoNoise = props_dict['likesNoNoise'],
+                              oftenAtHome = props_dict['oftenAtHome'], likesFluffy = props_dict['likesFluffy'],
+                              hyberactive = props_dict['hyberactive'], likesCleaning = props_dict['likesCleaning'],
+                              needsKindness =props_dict['needsKindness'],lonely = props_dict['lonely'],
+                              livesInHouse = props_dict['livesInHouse'], likesGrooming = props_dict['likesGrooming'],
+                              likesRunning = props_dict['likesRunning'], likesToTrain = props_dict['likesToTrain'],
+                              livesInSmallFlat = props_dict['livesInSmallFlat'], playful = props_dict['playful']))  # значение
+        engine.run()
+
+        # after engine processing
+        # TODO: engine put result in client_results variable
+        # for now there are all animals
+
+        for result in client_results:
+            # carnivora
+            if hasattr(result,'carnivora'):
+                # cats
+                if hasattr(result.carnivora, 'cat'):
+                    print(result.carnivora.cat.breed)
+                # dogs
+                if hasattr(result.carnivora, 'dog'):
+                    print(result.carnivora.dog.breed)
+            # rodentia
+            if hasattr(result, 'rodentia'):
+                print(result.rodentia.breed)
+            # lagomorpha
+            if hasattr(result, 'lagomorpha'):
+                print(result.lagomorpha.breed)
+            # aves
+            if hasattr(result, 'aves'):
+                # parrots
+                if hasattr(result.aves, 'parrot'):
+                    print(result.aves.parrot.breed)
+
         results = []
         answers = TestAnswer.objects.all()
         for answer in answers:
             if answer.selected:
-                print(answer.question)
-                print(answer.text)
                 results.append({
                     'n': answer.question.order,
                     'q': answer.question,
                     'a': answer.text
                 })
-        # add results analytics with pyknow
 
         return render(request, 'result.html',{'avatar':avatar_url, 'results': results})
 
@@ -107,13 +164,13 @@ class TestQuestionView(View):
         a_selected.selected = True
         a_selected.save()
         q = TestQuestion.objects.get(pk=id)
-        #print(q)
-        #print(q.next_q1, q.next_q2)
+
+
         if (a_selected.text == 'Да' or a_selected.text == 'Нравится' or a_selected.text == 'Дом' or a_selected.text == 'Часто'):
-            props_dict.update({id:True})
+            props_dict.update({arrProps[int(id)-1]:True})
             next_q = q.next_q1
         else:
-            props_dict.update({id: False})
+            #props_dict.update({arrProps[int(id)-1]: False})
             next_q = q.next_q2
         if next_q != 0:
             return HttpResponseRedirect("../test/" + str(next_q))
